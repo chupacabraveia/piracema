@@ -33,7 +33,6 @@ function status_code(){
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const url = urlParams.get('link');
- // var url = document.getElementById('link').value;
   var msg = document.getElementById('messagem');
   if (url.includes('.m3u8')==true){var xhr = new XMLHttpRequest();code = xhr.open('GET', url);xhr.onreadystatechange=function(){if(xhr.readyState==4){if (xhr.status == 200){document.getElementById('vvideo').style.display = "block";player_start(url)}else {msg.innerHTML = 'OFFLINE STATUS ('+xhr.status+')';console.log(xhr.status)}}};xhr.send()}else{msg.innerHTML ='Link Inválido!';document.getElementById('link').value = '' ;console.log('link invalido')}}
 function player_start(url) {
