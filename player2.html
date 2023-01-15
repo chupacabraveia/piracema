@@ -32,12 +32,13 @@ function msg_clear(){var msg = document.getElementById('messagem').innerHTML = '
 function status_code(){
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const url = urlParams.get('link');
+  var url = urlParams.get('link');
+  if(url=='null') {url=document.getElementById('link').value;}
   console.log(url);
-  if (url.includes('.m3u8')==false){var url = document.getElementById('link').value;}
   var msg = document.getElementById('messagem');
   if (url.includes('.m3u8')==true){var xhr = new XMLHttpRequest();code = xhr.open('GET', url);xhr.onreadystatechange=function(){if(xhr.readyState==4){if (xhr.status == 200){document.getElementById('vvideo').style.display = "block";player_start(url)}else {msg.style.display="block";console.log(xhr.status)}}};xhr.send()}else{msg.innerHTML ='Link Inválido!';document.getElementById('link').value = '' ;console.log('link invalido')}}
 function player_start(url) {
+    document.getElementById('form').style.display='none';
     if (Hls.isSupported()) {status(url);const video = document.getElementById('video');const hls = new Hls ();hls.attachMedia(video);hls.on(Hls.Events.MEDIA_ATTACHED, function () {hls.loadSource(url);});}}
 </script>
 
@@ -49,14 +50,13 @@ function player_start(url) {
 		<div class="alert alert-danger" id="messagem" style="display:none" role="alert">
 			<h3>Offline</h3>
 		</div>
-		<h3 id="messagem" style="color:white"></h3>
-		<div id="vvideo" class="container-fluid border-bottom shadow-sm"  style="display:none">
-			<video id="video" controls autoplay class="videoCentered"></video>
+		<div id="vvideo" class=""  style="display:none">
+			<video id="video" controls autoplay></video>
 		</div>
-		<div class="form-group row">
+		<div class="form-group" id="form">
 			<label for="link" class="col-sm-2 col-form-label col-form-label-lg">Url</label>
 			<div class="col-sm-10">
-				<input type="url" name="text" class="form-control form-control-lg" id="link" placeholder="https://live.com/live/playlist.m3u8"onkeyup="status_code()" required>
+				<input type="url" name="text" class="form-control form-control-lg" id="link" placeholder="https://live.com/live/playlist.m3u8"onchange="status_code()" required>
 			</div>
 		</div>
 		<button class="btn btn-success btn-block" onclick="status_code()">Play!</button>
